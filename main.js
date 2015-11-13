@@ -63,7 +63,12 @@ var sendCmd = function(cmd) {
     input.prop('disabled', true);
     //update record
     user.update({ timestamp:  Firebase.ServerValue.TIMESTAMP, request: cmd, response: ''});
-    //add command to last commands buffer
+    //no more than 100 commands
+    if (last_command.cmds.length > 99) {
+        //remove oldest command
+        last_command.cmds.pop();
+    }
+    //add command to last_commands buffer
     last_command.cmds.unshift(cmd);
     last_command.index = -1;
     //start server timeout
