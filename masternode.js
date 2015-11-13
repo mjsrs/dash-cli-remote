@@ -1,5 +1,5 @@
 'use strict';
-/* globals require*/
+/* global require*/
 /*eslint no-console: 0*/
 var Firebase = require('firebase');          //https://www.npmjs.com/package/firebase
 var exec = require('child_process').exec;

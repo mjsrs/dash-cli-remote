@@ -8,7 +8,7 @@
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
     <meta name="description" content="">
     <meta name="author" content="">
-    <link rel="icon" href="../../favicon.ico">
+    <link rel="icon" href="favicon.ico">
 
     <title>Dash-cli remote</title>
 
@@ -18,10 +18,6 @@
 
     <!-- Custom styles for this template -->
     <link href="navbar-fixed-top.css" rel="stylesheet">
-
-    <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
-    <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
-    <script src="../../assets/js/ie-emulation-modes-warning.js"></script>
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -42,30 +38,11 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="#">Project name</a>
+          <a class="navbar-brand" href="#">dash-cli remote</a>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
-          <ul class="nav navbar-nav">
-            <li class="active"><a href="#">Home</a></li>
-            <li><a href="#about">About</a></li>
-            <li><a href="#contact">Contact</a></li>
-            <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
-              <ul class="dropdown-menu">
-                <li><a href="#">Action</a></li>
-                <li><a href="#">Another action</a></li>
-                <li><a href="#">Something else here</a></li>
-                <li role="separator" class="divider"></li>
-                <li class="dropdown-header">Nav header</li>
-                <li><a href="#">Separated link</a></li>
-                <li><a href="#">One more separated link</a></li>
-              </ul>
-            </li>
-          </ul>
           <ul class="nav navbar-nav navbar-right">
-            <li><a href="../navbar/">Default</a></li>
-            <li><a href="../navbar-static-top/">Static top</a></li>
-            <li class="active"><a href="./">Fixed top <span class="sr-only">(current)</span></a></li>
+            <li><a href="">list of commands</a></li>
           </ul>
         </div><!--/.nav-collapse -->
       </div>
@@ -91,49 +68,9 @@
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
     <script type="text/javascript" src="firebase.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 <!-- Latest compiled and minified JavaScript -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js" integrity="sha512-K1qjQ+NcF2TYO/eI3M6v8EiNYZfA95pQumfvcVrTHtwQVDG+aHRqLi/ETn2uB+1JqwYqVG3LIvdm9lj6imS/pQ==" crossorigin="anonymous"></script>
-    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-    <script src="../../assets/js/ie10-viewport-bug-workaround.js"></script>
-
-    <script type="text/javascript">
-    $('#cmd_box').keypress(function(e) {
-      if (event.which === 13) {
-        event.preventDefault();
-        console.log('enter key pressed');
-        console.log(event.currentTarget.value);
-        var cmd = event.currentTarget.value;
-        user.update({ timestamp:  Firebase.ServerValue.TIMESTAMP, request: cmd, response: ''});
-      }
-    });
-    allowed_commands = ['help', 'getinfo', 'masternode count'];
-      var presence = new Firebase("https://masternode.firebaseio.com/presence/");
-      //user = presence.push();
-      user = presence.push({ timestamp:  Firebase.ServerValue.TIMESTAMP, request: '', response: ''});
-
-      var commands = new Firebase("https://masternode.firebaseio.com/presence/" + user.key() + '/');
-      console.log('this is user:');
-      console.log(user);
-      var connection = new Firebase("https://masternode.firebaseio.com/.info/connected");
-      connection.on("value", function(snap){
-        if(snap.val()){
-          user.onDisconnect().remove();
-          user.set({ timestamp:  Firebase.ServerValue.TIMESTAMP, request: '', response: ''});
-        }
-      });
-      user.on('child_changed', function(snap) {
-        if (snap.key() === 'response') {
-          console.log(snap.key() + ':' +snap.val());
-          $("p[id=response]").html(snap.val());          
-        }
-      });
-      setInterval(function() {
-        var index = Math.floor(Math.random() * (1 - 0 + 1)) + 0;
-        var cmd = allowed_commands[index];
-        console.log('sending command ' + cmd);
-        user.update({ timestamp:  Firebase.ServerValue.TIMESTAMP, request: cmd, response: ''});
-      }, 1000);
-    </script>
+    <script type="text/javascript" src="main.js"></script>
   </body>
 </html>
