@@ -17,8 +17,7 @@ $('#cmd_box').keydown(function(event) {
         event.preventDefault();
         console.log('enter key pressed');
         console.log(event.currentTarget.value);
-        var cmd = event.currentTarget.value;
-        sendCmd(cmd);
+        sendCmd(event.currentTarget.value);
         break;
     //arrow up -> navigate recent commands
     case 38:
@@ -46,21 +45,22 @@ connection.on('value', function(snap){
 
 user.on('child_changed', function(snap) {
     if (snap.key() === 'response') {
+        var input = $('#cmd_box');
         if (snap.val() === '') {return;}
         clearTimeout(timer);
         console.log(snap.key() + ':' +snap.val());
         $('p[id=response]').html(snap.val());
-        $('#cmd_box').removeAttr('disabled');
-        $('#cmd_box').focus();
+        input.val('');
+        input.removeAttr('disabled');
+        input.focus();
     }
 });
 
 var sendCmd = function(cmd) {
     //clear input box
     var input = $('#cmd_box');
-    input.val('');
     //disable input while waiting for server response or timeout
-    input.disabled = true;
+    input.prop('disabled', true);
     //update record
     user.update({ timestamp:  Firebase.ServerValue.TIMESTAMP, request: cmd, response: ''});
     //add command to last commands buffer
@@ -68,6 +68,7 @@ var sendCmd = function(cmd) {
     //start server timeout
     timer = setTimeout(function(){
         $('p[id=response]').html('Error - server response timeout');
+        input.val('');
         input.removeAttr('disabled');
         input.focus();
     }, 5000);

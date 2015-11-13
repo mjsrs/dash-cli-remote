@@ -79,9 +79,9 @@
     <script type="text/javascript" src="cmds.js"></script>
     <script type="text/javascript">
       // must be called after cmds.js import
+      //add commands to the list
       exports.public.forEach(function(element, index, array){
         var html = '<li><a href="#" onclick="sendCmd(\'' + element + '\');">' + element + '</a></li>';
-        console.log(html);
         $('#cmds').append(html);
       });
     </script>
