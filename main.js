@@ -30,7 +30,7 @@ $('#cmd_box').keydown(function(event) {
             $('p[id=response]').html('Error - server response timeout');
             $('#cmd_box').removeAttr('disabled');
             $('#cmd_box').focus();
-        }, 3000);
+        }, 5000);
         break;
     //arrow up -> navigate recent commands
     case 38:
