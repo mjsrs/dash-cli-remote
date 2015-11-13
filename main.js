@@ -15,9 +15,13 @@ $('#cmd_box').keypress(function(event) {
         console.log('enter key pressed');
         console.log(event.currentTarget.value);
         var cmd = event.currentTarget.value;
+        //clear input box
         event.currentTarget.value = '';
+        //disable input while waiting for server response or timeout
         event.currentTarget.disabled = true;
+        //update record
         user.update({ timestamp:  Firebase.ServerValue.TIMESTAMP, request: cmd, response: ''});
+        //start server timeout
         timer = setTimeout(function(){
             $('p[id=response]').html('Error - server response timeout');
             $('#cmd_box').removeAttr('disabled');
@@ -34,6 +38,7 @@ connection.on('value', function(snap){
 
 user.on('child_changed', function(snap) {
     if (snap.key() === 'response') {
+        if (snap.val() === '') {return;}
         clearTimeout(timer);
         console.log(snap.key() + ':' +snap.val());
         $('p[id=response]').html(snap.val());
@@ -41,6 +46,7 @@ user.on('child_changed', function(snap) {
     }
 });
 
+//dare to break the server
 /*setInterval(function() {
   var index = Math.floor(Math.random() * (1 - 0 + 1)) + 0;
   var cmd = allowed_commands[index];
