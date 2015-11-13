@@ -42,7 +42,11 @@
         </div>
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav navbar-right">
-            <li><a href="">list of commands</a></li>
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">List of commands <span class="caret"></span></a>
+              <ul id="cmds" class="dropdown-menu  scrollable-menu">
+              </ul>
+            </li>
           </ul>
         </div><!--/.nav-collapse -->
       </div>
@@ -72,5 +76,14 @@
 <!-- Latest compiled and minified JavaScript -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js" integrity="sha512-K1qjQ+NcF2TYO/eI3M6v8EiNYZfA95pQumfvcVrTHtwQVDG+aHRqLi/ETn2uB+1JqwYqVG3LIvdm9lj6imS/pQ==" crossorigin="anonymous"></script>
     <script type="text/javascript" src="main.js"></script>
+    <script type="text/javascript" src="cmds.js"></script>
+    <script type="text/javascript">
+      // must be called after cmds.js import
+      exports.public.forEach(function(element, index, array){
+        var html = '<li><a href="#" onclick="sendCmd(\'' + element + '\');">' + element + '</a></li>';
+        console.log(html);
+        $('#cmds').append(html);
+      });
+    </script>
   </body>
 </html>

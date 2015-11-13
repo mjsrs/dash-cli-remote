@@ -3,12 +3,13 @@
 /*eslint no-console: 0*/
 
 var timer;
+var exports = {public:[]};
 var last_command = {index:-1, cmds:[]};
-var allowed_commands = ['help', 'getinfo', 'masternode count'];
 var presence = new Firebase("https://masternode.firebaseio.com/presence/");
 var user = presence.push({ timestamp:  Firebase.ServerValue.TIMESTAMP, request: '', response: ''});
 var commands = new Firebase("https://masternode.firebaseio.com/presence/" + user.key() + '/');
 var connection = new Firebase("https://masternode.firebaseio.com/.info/connected");
+
 
 $('#cmd_box').keydown(function(event) {
     switch(event.which){
@@ -17,20 +18,7 @@ $('#cmd_box').keydown(function(event) {
         console.log('enter key pressed');
         console.log(event.currentTarget.value);
         var cmd = event.currentTarget.value;
-        //clear input box
-        event.currentTarget.value = '';
-        //disable input while waiting for server response or timeout
-        event.currentTarget.disabled = true;
-        //update record
-        user.update({ timestamp:  Firebase.ServerValue.TIMESTAMP, request: cmd, response: ''});
-        //add command to last commands buffer
-        last_command.cmds.unshift(cmd);
-        //start server timeout
-        timer = setTimeout(function(){
-            $('p[id=response]').html('Error - server response timeout');
-            $('#cmd_box').removeAttr('disabled');
-            $('#cmd_box').focus();
-        }, 5000);
+        sendCmd(cmd);
         break;
     //arrow up -> navigate recent commands
     case 38:
@@ -67,10 +55,28 @@ user.on('child_changed', function(snap) {
     }
 });
 
+var sendCmd = function(cmd) {
+    //clear input box
+    var input = $('#cmd_box');
+    input.val('');
+    //disable input while waiting for server response or timeout
+    input.disabled = true;
+    //update record
+    user.update({ timestamp:  Firebase.ServerValue.TIMESTAMP, request: cmd, response: ''});
+    //add command to last commands buffer
+    last_command.cmds.unshift(cmd);
+    //start server timeout
+    timer = setTimeout(function(){
+        $('p[id=response]').html('Error - server response timeout');
+        input.removeAttr('disabled');
+        input.focus();
+    }, 5000);
+};
+
 //dare to break the server
 /*setInterval(function() {
-  var index = Math.floor(Math.random() * (1 - 0 + 1)) + 0;
-  var cmd = allowed_commands[index];
-  console.log('sending command ' + cmd);
-  user.update({ timestamp:  Firebase.ServerValue.TIMESTAMP, request: cmd, response: ''});
+    var index = Math.floor(Math.random() * (1 - 0 + 1)) + 0;
+    var cmd = exports.public[index];
+    console.log('sending command ' + cmd);
+    user.update({ timestamp:  Firebase.ServerValue.TIMESTAMP, request: cmd, response: ''});
 }, 1000);*/
