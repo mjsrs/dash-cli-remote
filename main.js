@@ -65,6 +65,7 @@ var sendCmd = function(cmd) {
     user.update({ timestamp:  Firebase.ServerValue.TIMESTAMP, request: cmd, response: ''});
     //add command to last commands buffer
     last_command.cmds.unshift(cmd);
+    last_command.index = -1;
     //start server timeout
     timer = setTimeout(function(){
         $('p[id=response]').html('Error - server response timeout');
