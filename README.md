@@ -17,3 +17,21 @@ This is a proof of concept of a remote command line for dash wallet/masternode u
 
 # why use firebase
 [Firebase](https://www.firebase.com/) opens the possibility to communicate with a wallet without openning any ports on your router.
+
+# Setup your own dash-cli
+  - Install DASH wallet and run it
+  - Create an account at [Firebase](https://www.firebase.com/)
+  - At the dashboard create a new app
+  - Clone this github to your computer
+  - Replace url in masternode.js by the url of your app
+  - Replace url(s) in main.js by the url of your app
+  - [Follow this tutorial on how to deploy the code to Firebase servers](https://www.firebase.com/docs/hosting/quickstart.html)
+  - [Install Firebase npm package](https://www.npmjs.com/package/firebase) 
+  ``` sh
+  $ npm install firebase
+  ```
+  - run masternode.js
+  ``` sh
+  $ nodejs masternode.js
+  ```
+  - got to https://your_app_name.firebaseapp.com to talk to your wallet
