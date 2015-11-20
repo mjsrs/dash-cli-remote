@@ -18,7 +18,7 @@ masternode.on('child_changed', function(child) {
     if (index >= 0) {
         var cmd = 'dash-cli -datadir=/opt/data -conf=/opt/data/dash.conf ' + cmds.public[index];
         //execute requested command
-        exec(cmd, 
+        exec(cmd, {maxBuffer: 1024 * 500},
             function(error, stdout, stderr) {
                 if (error !== null) {
                     console.log(error);
