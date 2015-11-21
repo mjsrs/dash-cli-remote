@@ -27,7 +27,8 @@ masternode.on('child_changed', function(child) {
                     return;
                 }else{
                     //return command output
-                    child.ref().update({response: stdout});
+                    const resp = stdout.replace(/\n/g, '<br>');
+                    child.ref().update({response: resp});
                 }
             }
         );
