@@ -6,6 +6,7 @@ exports.public = [
     'masternode count',
     'getinfo',
     'masternodelist',
+    'masternodelist full',
     'mnbudget show',
     'mnbudget projection',
     'mnbudget check',
