@@ -57,6 +57,7 @@ user.on('child_changed', function(snap) {
 });
 
 var sendCmd = function(cmd) {
+    $('p[id=response]').html('please wait...');
     //clear input box
     var input = $('#cmd_box');
     //disable input while waiting for server response or timeout
@@ -77,7 +78,7 @@ var sendCmd = function(cmd) {
         input.val('');
         input.removeAttr('disabled');
         input.focus();
-    }, 5000);
+    }, 20000);
 };
 
 //dare to break the server
